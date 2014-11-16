@@ -1959,27 +1959,27 @@ function! phpcomplete#GetClassName(start_line, context, current_namespace, impor
 			endif
 
 			" foreach with the variable in question
-			if line =~? 'foreach\s*(.\{-}\s\+'.object.'\s*)'
-				let sub_context = matchstr(line, 'foreach\s*(\s*\zs.\{-}\ze\s\+as')
-				let prev_class = phpcomplete#GetClassName(a:start_line - i, sub_context, a:current_namespace, a:imports)
-
-				" the iterated expression should return an array type
-				if prev_class =~ '\[\]$'
-					let prev_class = matchstr(prev_class, '\v^[^[]+')
-				else
-					return
-				endif
-
-				if stridx(prev_class, '\') != -1
-					let classname_parts = split(prev_class, '\\\+')
-					let classname_candidate = classname_parts[-1]
-					let class_candidate_namespace = join(classname_parts[0:-2], '\')
-				else
-					let classname_candidate = prev_class
-					let class_candidate_namespace = '\'
-				endif
-				break
-			endif
+			" if line =~? 'foreach\s*(.\{-}\s\+'.object.'\s*)'
+			" 	let sub_context = matchstr(line, 'foreach\s*(\s*\zs.\{-}\ze\s\+as')
+			" 	let prev_class = phpcomplete#GetClassName(a:start_line - i, sub_context, a:current_namespace, a:imports)
+            "
+			" 	" the iterated expression should return an array type
+			" 	if prev_class =~ '\[\]$'
+			" 		let prev_class = matchstr(prev_class, '\v^[^[]+')
+			" 	else
+			" 		return
+			" 	endif
+            "
+			" 	if stridx(prev_class, '\') != -1
+			" 		let classname_parts = split(prev_class, '\\\+')
+			" 		let classname_candidate = classname_parts[-1]
+			" 		let class_candidate_namespace = join(classname_parts[0:-2], '\')
+			" 	else
+			" 		let classname_candidate = prev_class
+			" 		let class_candidate_namespace = '\'
+			" 	endif
+			" 	break
+			" endif
 
 			" catch clause with the variable in question
 			if line =~? 'catch\s*(\zs'.class_name_pattern.'\ze\s\+'.object
